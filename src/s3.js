@@ -54,6 +54,35 @@ export async function uploadFile(filePath) {
   console.log(`Fisierul ${fileName} a fost incarcat!`);
 }
 
+// 2. Actualizarea unui fisier existent
+export async function updateFile(filePath) {
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Fisierul nu exista: ${filePath}`);
+  }
+
+  const fileContent = fs.readFileSync(filePath);
+  const fileName = path.basename(filePath);
+
+  // Verificam daca fisierul exista deja in bucket
+  await s3.send(
+    new GetObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: fileName,
+    }),
+  );
+
+  // Inlocuim continutul fisierului
+  await s3.send(
+    new PutObjectCommand({
+      Bucket: BUCKET_NAME,
+      Key: fileName,
+      Body: fileContent,
+    }),
+  );
+
+  console.log(`Fisierul ${fileName} a fost actualizat!`);
+}
+
 // 3. Listarea fisierelor
 export async function listFiles() {
   const result = await s3.send(

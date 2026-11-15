@@ -1,6 +1,7 @@
 import {
   createBucket,
   uploadFile,
+  updateFile,
   listFiles,
   downloadFile,
   deleteFile,
@@ -22,6 +23,13 @@ async function main() {
           throw new Error("Specificati calea fisierului!");
         }
         await uploadFile(argument);
+        break;
+
+      case "update":
+        if (!argument) {
+          throw new Error("Specificati calea fisierului!");
+        }
+        await updateFile(argument);
         break;
 
       case "list":
@@ -58,6 +66,7 @@ Comenzi disponibile:
   node src/index.js download document.txt
   node src/index.js delete document.txt
   node src/index.js delete-bucket
+  node src/index.js update uploads/document.txt
         `);
     }
   } catch (error) {

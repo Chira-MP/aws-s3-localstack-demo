@@ -88,21 +88,29 @@ Aceste credentiale sunt utilizate exclusiv pentru mediul local de testare.
 
     node src/index.js upload uploads/document.txt
 
-### 7.3 Listarea fisierelor
+### 7.3 Actualizarea unui fisier existent
+
+Pentru actualizarea continutului unui fisier deja incarcat:
+
+    node src/index.js update uploads/document.txt
+
+Aplicatia verifica existenta obiectului in bucket si inlocuieste continutul acestuia cu noul continut al fisierului local.
+
+### 7.4 Listarea fisierelor
 
     node src/index.js list
 
-### 7.4 Descarcarea unui fisier
+### 7.5 Descarcarea unui fisier
 
     node src/index.js download document.txt
 
 Fisierul descarcat va fi salvat in folderul downloads.
 
-### 7.5 Stergerea unui fisier
+### 7.6 Stergerea unui fisier
 
     node src/index.js delete document.txt
 
-### 7.6 Stergerea bucket-ului
+### 7.7 Stergerea bucket-ului
 
 Bucket-ul trebuie sa fie gol inainte de stergere.
 
@@ -145,4 +153,9 @@ Proiectul demonstreaza utilizarea serviciului Amazon S3 intr-un mediu local, pri
 
 Prin implementarea aplicatiei au fost demonstrate operatiunile de creare, incarcare, citire, descarcare si stergere a obiectelor dintr-un bucket S3.
 
-Utilizarea Docker si LocalStack permite testarea functionalitatilor AWS fara a necesita conectarea la infrastructura AWS reala.
+Proiectul demonstreaza operatiunile CRUD
+(Create, Read, Update, Delete) pentru gestionarea
+fisierelor folosind serviciul Amazon S3.
+
+Operatiunile sunt realizate prin AWS SDK for JavaScript
+si testate local cu ajutorul LocalStack si Docker.
