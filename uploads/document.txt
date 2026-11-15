@@ -1,0 +1,11 @@
+
+Acesta este un fisier de test pentru proiectul meu AWS S3.
+
+Proiect realizat folosind:
+- JavaScript
+- Node.js
+- Docker
+- LocalStack
+- Amazon S3
+
+Scopul proiectului este demonstrarea operatiunilor de stocare a fisierelor.
