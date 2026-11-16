@@ -2,18 +2,16 @@
 
 ## 1. Descrierea proiectului
 
-Acest proiect demonstreaza integrarea si utilizarea serviciului Amazon S3 folosind LocalStack, Docker si JavaScript (Node.js).
+Acest proiect reprezinta un prototip functional pentru demonstrarea utilizarii serviciului Amazon S3 folosind LocalStack, Docker si JavaScript (Node.js).
 
-Aplicatia permite gestionarea fisierelor prin intermediul unui serviciu S3 simulat local.
+Aplicatia permite gestionarea fisierelor prin intermediul unui bucket S3 simulat local.
 
-Operatiile implementate sunt:
+Proiectul demonstreaza operatiunile CRUD:
 
-- Crearea unui bucket.
-- Incarcarea fisierelor.
-- Listarea fisierelor.
-- Descarcarea fisierelor.
-- Stergerea fisierelor.
-- Stergerea bucket-ului.
+- Create - crearea unui bucket si incarcarea fisierelor.
+- Read - listarea si descarcarea fisierelor.
+- Update - actualizarea continutului unui fisier.
+- Delete - stergerea fisierelor si a bucket-ului.
 
 ## 2. Tehnologii utilizate
 
@@ -26,136 +24,202 @@ Operatiile implementate sunt:
 - Amazon S3
 - AWS SDK for JavaScript v3
 
-## 3. Cerinte preliminare
+## 3. Structura proiectului
+
+```text
+aws-s3-localstack-demo/
+│
+├── src/
+│   ├── s3.js
+│   └── index.js
+│
+├── uploads/
+│   └── document.txt
+│
+├── screenshots/
+│   ├── 01-localstack.png
+│   ├── 02-create-bucket.png
+│   ├── 03-upload.png
+│   ├── 04-list.png
+│   ├── 05-update.png
+│   ├── 06-download.png
+│   └── 07-delete.png
+│
+├── docker-compose.yml
+├── package.json
+├── package-lock.json
+├── README.md
+└── .gitignore
+```
+
+## 4. Cerinte preliminare
 
 Pentru rularea proiectului sunt necesare:
 
-- Node.js
-- npm
-- Docker Desktop
-- Docker Compose
+- Node.js 22 sau o versiune compatibila.
+- npm.
+- Docker Desktop.
+- Docker Compose.
+- Git (optional, pentru clonarea repository-ului).
 
-## 4. Instalarea proiectului
+## 5. Instalarea proiectului
 
-Clonati repository-ul:
+Clonarea repository-ului:
 
-    git clone ADRESA_REPOSITORY
+```bash
+git clone https://github.com/Chira-MP/aws-s3-localstack-demo.git
+```
 
-Intrati in folderul proiectului:
+Accesarea folderului:
 
-    cd aws-s3-localstack-demo
+```bash
+cd aws-s3-localstack-demo
+```
 
-Instalati dependentele:
+Instalarea dependintelor:
 
-    npm install
+```bash
+npm install
+```
 
-## 5. Pornirea LocalStack
+## 6. Pornirea LocalStack
 
-Porniti containerul Docker:
+Pornirea containerului:
 
-    docker compose up -d
+```bash
+docker compose up -d
+```
 
-Verificati containerul:
+Verificarea containerului:
 
-    docker ps
+```bash
+docker ps
+```
 
-Verificati starea LocalStack:
+Verificarea starii serviciilor:
 
-    Invoke-RestMethod http://localhost:4566/_localstack/health
+```powershell
+Invoke-RestMethod http://localhost:4566/_localstack/health
+```
 
-## 6. Configurarea conexiunii S3
+## 7. Configurarea conexiunii S3
 
-Aplicatia comunica cu LocalStack folosind endpoint-ul:
+Aplicatia utilizeaza urmatoarea configuratie:
 
-    http://localhost:4566
-
-Configuratia utilizata:
-
-- Region: us-east-1
-- Access key: test
-- Secret key: test
 - Endpoint: http://localhost:4566
+- Region: us-east-1
+- Access Key: test
+- Secret Key: test
+- Bucket: proiect-fisiere-demo
 
-Aceste credentiale sunt utilizate exclusiv pentru mediul local de testare.
+Credentialele sunt utilizate exclusiv pentru mediul local de testare.
 
-## 7. Utilizarea aplicatiei
+## 8. Utilizarea aplicatiei
 
-### 7.1 Crearea unui bucket
+### 8.1. Crearea unui bucket
 
-    node src/index.js create
+```bash
+node src/index.js create
+```
 
-### 7.2 Incarcarea unui fisier
+### 8.2. Incarcarea unui fisier
 
-    node src/index.js upload uploads/document.txt
+```bash
+node src/index.js upload uploads/document.txt
+```
 
-### 7.3 Actualizarea unui fisier existent
+### 8.3. Actualizarea unui fisier
 
-Pentru actualizarea continutului unui fisier deja incarcat:
+```bash
+node src/index.js update uploads/document.txt
+```
 
-    node src/index.js update uploads/document.txt
+Fisierul trebuie sa existe deja in bucket. Continutul sau va fi inlocuit cu cel din fisierul local.
 
-Aplicatia verifica existenta obiectului in bucket si inlocuieste continutul acestuia cu noul continut al fisierului local.
+### 8.4. Listarea fisierelor
 
-### 7.4 Listarea fisierelor
+```bash
+node src/index.js list
+```
 
-    node src/index.js list
+### 8.5. Descarcarea unui fisier
 
-### 7.5 Descarcarea unui fisier
+```bash
+node src/index.js download document.txt
+```
 
-    node src/index.js download document.txt
+Fisierul va fi salvat in folderul downloads.
 
-Fisierul descarcat va fi salvat in folderul downloads.
+### 8.6. Stergerea unui fisier
 
-### 7.6 Stergerea unui fisier
+```bash
+node src/index.js delete document.txt
+```
 
-    node src/index.js delete document.txt
-
-### 7.7 Stergerea bucket-ului
+### 8.7. Stergerea bucket-ului
 
 Bucket-ul trebuie sa fie gol inainte de stergere.
 
-    node src/index.js delete-bucket
+```bash
+node src/index.js delete-bucket
+```
 
-## 8. Oprirea LocalStack
+## 9. Capturi de ecran
+
+### Pornirea LocalStack
+
+![LocalStack pornit](screenshots/01-localstack.png)
+
+### Crearea bucket-ului
+
+![Crearea bucket-ului](screenshots/02-create-bucket.png)
+
+### Incarcarea fisierului
+
+![Incarcarea fisierului](screenshots/03-upload.png)
+
+### Listarea fisierelor
+
+![Listarea fisierelor](screenshots/04-list.png)
+
+### Actualizarea fisierului
+
+![Actualizarea fisierului](screenshots/05-update.png)
+
+### Descarcarea fisierului
+
+![Descarcarea fisierului](screenshots/06-download.png)
+
+### Stergerea fisierului
+
+![Stergerea fisierului](screenshots/07-delete.png)
+
+## 10. Oprirea LocalStack
 
 Pentru oprirea containerului:
 
-    docker compose down
+```bash
+docker compose down
+```
 
-Datele persistente sunt pastrate in volumul Docker definit in configuratia Compose.
+Pentru stergerea inclusiv a volumului persistent:
 
-Pentru stergerea definitiva a volumului si a datelor persistente se poate utiliza:
+```bash
+docker compose down -v
+```
 
-    docker compose down -v
+Atentie: ultima comanda sterge datele persistente ale LocalStack.
 
-ATENTIE: ultima comanda sterge si datele persistente ale LocalStack.
+## 11. Concluzii
 
-## 9. Structura proiectului
+Proiectul demonstreaza integrarea si utilizarea serviciului Amazon S3 intr-un mediu local, prin intermediul LocalStack.
 
-    aws-s3-localstack-demo/
-    |
-    |-- src/
-    |   |-- s3.js
-    |   |-- index.js
-    |
-    |-- uploads/
-    |   |-- document.txt
-    |
-    |-- docker-compose.yml
-    |-- package.json
-    |-- package-lock.json
-    |-- README.md
-    |-- .gitignore
+Prin implementarea aplicatiei au fost demonstrate operatiunile de creare, citire, actualizare si stergere a fisierelor.
 
-## 10. Concluzii
+Utilizarea Docker si LocalStack permite testarea functionalitatilor unui serviciu AWS fara a necesita utilizarea infrastructurii AWS reale.
 
-Proiectul demonstreaza utilizarea serviciului Amazon S3 intr-un mediu local, prin intermediul LocalStack.
+## 12. Repository GitHub
 
-Prin implementarea aplicatiei au fost demonstrate operatiunile de creare, incarcare, citire, descarcare si stergere a obiectelor dintr-un bucket S3.
+Codul sursa si documentatia proiectului sunt disponibile public la:
 
-Proiectul demonstreaza operatiunile CRUD
-(Create, Read, Update, Delete) pentru gestionarea
-fisierelor folosind serviciul Amazon S3.
-
-Operatiunile sunt realizate prin AWS SDK for JavaScript
-si testate local cu ajutorul LocalStack si Docker.
+https://github.com/Chira-MP/aws-s3-localstack-demo

@@ -13,3 +13,6 @@ Scopul proiectului este demonstrarea operatiunilor de stocare a fisierelor.
 Acesta este continutul actualizat al documentului.
 
 Operatiunea UPDATE a fost testata cu succes folosind Amazon S3 si LocalStack.
+
+Acesta este continutul actualizat al documentului.
+Operatiunea UPDATE a fost testata cu succes.
